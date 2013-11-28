@@ -1,8 +1,8 @@
   <div class=''>
     <h4><%= _("Merge ") %></h4>
     <%= form_tag({:controller => '/articles', :action => 'merge'}) do %>
-    <%= label_tag(:q, "Article ID") %>
-    <%= text_field_tag(:q) %>
+    <%= label_tag(:merge_with, "Article ID") %>
+    <%= text_field_tag(:merge_with) %>
     <%= submit_tag("Merge Articles") %>
 <% end %>
   </div>
