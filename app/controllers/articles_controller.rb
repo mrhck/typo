@@ -64,6 +64,13 @@ class ArticlesController < ContentController
     @articles = Article.search(@search)
     render :live_search, :layout => false
   end
+  
+  def merge
+  
+      @article = Article.last_draft(params[:id])
+    @canonical_url = ""
+    render 'read'
+  end
 
   def preview
     @article = Article.last_draft(params[:id])

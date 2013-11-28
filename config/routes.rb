@@ -67,6 +67,7 @@ Rails.application.routes.draw do
   match 'check_password', :to => 'articles#check_password', :format => false
   match 'articles/markup_help/:id', :to => 'articles#markup_help', :format => false
   match 'articles/tag', :to => 'articles#tag', :format => false
+  match 'articles/merge', :to => 'articles#merge', :format => false
   match 'articles/category', :to => 'articles#category', :format => false
 
   # SetupController
