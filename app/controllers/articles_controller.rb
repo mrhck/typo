@@ -82,7 +82,7 @@ class ArticlesController < ContentController
     end
          
     article1.body += article2.body
-    article1.comments << article2.comments
+    article1.comments += article2.comments
     article1.save
     article2.destroy     	
          
