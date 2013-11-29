@@ -65,11 +65,29 @@ class ArticlesController < ContentController
     render :live_search, :layout => false
   end
   
-  def merge
-  
-      @article = Article.last_draft(params[:id])
-    @canonical_url = ""
-    render 'read'
+  def merge  
+    user = User.find_by_id(session[:user_id])
+    
+    if user.nil? || !user.admin?
+      flash[:error] = _("Only admin can merge articles")
+      redirect_to :controller => '/admin/content', :action => 'index' and return
+    end
+            
+    article1 = Article.find_by_id(params[:id])
+    article2 = Article.find_by_id(params[:merge_with])
+   
+    if article1.nil? || article2.nil?
+      flash[:error] = _("Could not find articles with given ids")
+      redirect_to :controller => '/admin/content', :action => 'index' and return
+    end
+         
+    article1.body += article2.body
+    article1.comments << article2.comments
+    article1.save
+    article2.destroy     	
+         
+    flash[:notice] = _('Articles were successfully merged')
+    redirect_to :controller => '/admin/content', :action => 'index'
   end
 
   def preview
