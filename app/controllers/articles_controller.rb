@@ -72,22 +72,15 @@ class ArticlesController < ContentController
       flash[:error] = _("Only admin can merge articles")
       redirect_to :controller => '/admin/content', :action => 'index' and return
     end
-            
-    article1 = Article.find_by_id(params[:id])
-    article2 = Article.find_by_id(params[:merge_with])
-   
-    if article1.nil? || article2.nil?
+
+    article = Article.find_by_id(params[:id])
+    if article.merge_with(params[:merge_with])
+      flash[:notice] = _("Articles successfully merged!")
+      redirect_to :controller => '/admin/content', :action => 'index'
+    else
       flash[:error] = _("Could not find articles with given ids")
-      redirect_to :controller => '/admin/content', :action => 'index' and return
+      redirect_to :controller => '/admin/content', :action => 'index'
     end
-         
-    article1.body += article2.body
-    article1.comments += article2.comments
-    article1.save
-    article2.destroy     	
-         
-    flash[:notice] = _('Articles were successfully merged')
-    redirect_to :controller => '/admin/content', :action => 'index'
   end
 
   def preview
