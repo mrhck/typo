@@ -74,11 +74,11 @@ class ArticlesController < ContentController
     end
 
     article = Article.find_by_id(params[:id])
-    if article.merge_with(params[:merge_with])
+    if not article.nil? and article.merge_with(params[:merge_with])
       flash[:notice] = _("Articles successfully merged!")
       redirect_to :controller => '/admin/content', :action => 'index'
     else
-      flash[:error] = _("Could not find articles with given ids")
+      flash[:error] = _("Could not merge articles with given ids")
       redirect_to :controller => '/admin/content', :action => 'index'
     end
   end

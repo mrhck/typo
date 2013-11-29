@@ -418,7 +418,7 @@ class Article < Content
   
   def merge_with(other_article_id)
     tomerge = Article.find_by_id(other_article_id)
-    if not self.id or not tomerge.id
+    if not tomerge or not self.id or not tomerge.id or tomerge.id==self.id
       return false
     end
 
@@ -426,7 +426,6 @@ class Article < Content
     self.comments << tomerge.comments
     self.save!
 
-    tomerge = Article.find_by_id(other_article_id)
     tomerge.destroy
 
     return true
