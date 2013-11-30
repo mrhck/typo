@@ -422,10 +422,13 @@ class Article < Content
       return false
     end
 
-    self.body = self.body + "\n\n" + tomerge.body
-    self.comments << tomerge.comments
+    unless tomerge.body.nil?
+      self.body = self.body + "\n\n" + tomerge.body
+    end
+    self.comments += tomerge.comments
     self.save!
 
+    tomerge = Article.find_by_id(other_article_id)
     tomerge.destroy
 
     return true
